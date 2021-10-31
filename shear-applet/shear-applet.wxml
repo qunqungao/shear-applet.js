@@ -1,0 +1,25 @@
+<view class="background">
+  <image class="loadingImg"  
+    style="width:{{imageWidth + 'px'}};height:{{imageHeight + 'px'}};"  
+    bindload="loadingImgFn" 
+    src="{{imgSrc}}">
+  </image>
+  <canvas type="2d" 
+    id="myCanvas"  
+    class="paper" 
+    style="width:{{windowWidth + 'px'}};height:{{windowHeight + 'px'}};z-index: 0;" 
+    bindtouchstart="touchStart" 
+    bindtouchmove="touching" 
+    bindtouchend="touchEnd">
+  </canvas>
+  <canvas type="2d" 
+    id="myCanvasTwo"  
+    class="paper" 
+    style="width:{{windowWidth + 'px'}};height:{{windowHeight + 'px'}};z-index: 1;pointer-events: none;">
+  </canvas>
+  <canvas type="2d" 
+    id="myCanvasThree"  
+    class="paper" 
+    style="width:{{windowWidth + 'px'}};height:{{windowHeight + 'px'}};opacity: 0;z-index: 0;pointer-events: none;">
+  </canvas>
+</view>
