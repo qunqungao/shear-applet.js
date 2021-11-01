@@ -164,6 +164,9 @@ Component({
        })
       this.canvasLoad('#myCanvas',1);
     },
+    errorImgFn(res){
+      console.log("图片加载失败",res)
+    },
     canvasDraw() {
       this.data.imgObj = this.data.canvasObj.canvas.createImage();//创建img对象
       //如果需要向canvas里载入多张图片，则需要分别创建多个img对象
@@ -354,9 +357,15 @@ Component({
       };
     },
     shearFunction(){
+    
       let destW = this.properties.MakWidth <= 0 ?  this.data.screenScale : this.properties.MakWidth;
       let destH = this.properties.MakHeight <= 0 ?  this.data.screenScale : this.properties.MakHeight;
       if(this.properties.MaskForm == 1 || !this.data.functionSwitch){
+        wx.showToast({
+          title: '11111111',
+          icon: 'error',
+          duration: 1000
+        })
         wx.canvasToTempFilePath({
           x:this.data.border.left,
           y:this.data.border.top,
@@ -374,6 +383,11 @@ Component({
           }
         });
       }else if(this.properties.MaskForm == 2 && this.data.functionSwitch){
+        wx.showToast({
+          title: '22222222222222',
+          icon: 'error',
+          duration: 1000
+        })
         // arc(x, y, r, s, e, counterclockwise)
         // x,y：圆心
         // r：圆的半径
@@ -381,7 +395,7 @@ Component({
         // e：终止弧度 (1.5 * Math.PI)
         // counterclockwise：弧度的方向是否是逆时针
         this.data.canvasObj.contextThree.save();
-        this.data.canvasObj.contextThree.arc( this.data.windowWidth/2  , this.data.windowHeight/2 , destW/2, 0, 2 * Math.PI,false); 
+        this.data.canvasObj.contextThree.arc( this.data.windowWidth/2  , this.data.windowHeight/2 , this.data.MaskWidth/2, 0, 2 * Math.PI,false); 
         this.data.canvasObj.contextThree.clip(); //剪切形状
         this.data.canvasObj.contextThree.drawImage(this.data.imgObj,this.data.imageX,this.data.imageY, this.data.imageWidth, this.data.imageHeight); 
         this.data.canvasObj.contextThree.restore(); //恢复之前保存的绘图上下文 恢复之前保存的绘图上下午即状态 可以继续绘制
