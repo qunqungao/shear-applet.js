@@ -1,7 +1,8 @@
 <view class="background">
   <image class="loadingImg"  
     style="width:{{imageWidth + 'px'}};height:{{imageHeight + 'px'}};"  
-    bindload="loadingImgFn" 
+    bindload="loadingImgFn"
+    binderror="errorImgFn" 
     src="{{imgSrc}}">
   </image>
   <canvas type="2d" 
