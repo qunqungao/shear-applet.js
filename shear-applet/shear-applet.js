@@ -361,11 +361,6 @@ Component({
       let destW = this.properties.MakWidth <= 0 ?  this.data.screenScale : this.properties.MakWidth;
       let destH = this.properties.MakHeight <= 0 ?  this.data.screenScale : this.properties.MakHeight;
       if(this.properties.MaskForm == 1 || !this.data.functionSwitch){
-        wx.showToast({
-          title: '11111111',
-          icon: 'error',
-          duration: 1000
-        })
         wx.canvasToTempFilePath({
           x:this.data.border.left,
           y:this.data.border.top,
@@ -383,11 +378,6 @@ Component({
           }
         });
       }else if(this.properties.MaskForm == 2 && this.data.functionSwitch){
-        wx.showToast({
-          title: '22222222222222',
-          icon: 'error',
-          duration: 1000
-        })
         // arc(x, y, r, s, e, counterclockwise)
         // x,y：圆心
         // r：圆的半径
