@@ -461,15 +461,7 @@ Component({
       }
     },
     maskControl(){
-      if(this.properties.MakWidth >= this.data.screenScale && this.properties.MakHeight <= this.data.screenScale){
-        let ratio = this.properties.MakWidth / this.data.screenScale;
-        this.data.MaskWidth = this.data.screenScale;
-        this.data.MaskHeight = this.properties.MakHeight / ratio;
-      }else if(this.properties.MakHeight >= this.data.screenScale && this.properties.MakWidth <= this.data.screenScale){
-        let ratio = this.properties.MakHeight / this.data.screenScale;
-        this.data.MaskWidth = this.properties.MakWidth / ratio;
-        this.data.MaskHeight = this.data.screenScale;
-      }else if(this.properties.MakWidth > this.data.screenScale && this.properties.MakHeight > this.data.screenScale) {
+      if(this.properties.MakWidth > this.data.screenScale || this.properties.MakHeight > this.data.screenScale) {
           if(this.properties.MakWidth > this.properties.MakHeight){
             let ratio = this.properties.MakWidth / this.data.screenScale;
             this.data.MaskWidth = this.data.screenScale;
