@@ -176,7 +176,7 @@ Component({
         this.data.stored.originScale = this.data.stored.scale || 1;
       };
     },
-    touchEnd(res){
+    touchEnd(res){//触摸结束
       if(!this.data.touchEndSwitch){
         return;
       };
@@ -184,53 +184,11 @@ Component({
       this.data.Left = this.data.imageX;
       this.data.Top = this.data.imageY;
       this.data.switch = false;
-      let countArr = [
-        {
-          str:"左",
-          count:this.data.imageX - this.data.border.left,
-          fn:()=>{
-            this.transitionFn(()=>{
-              this.data.imageX = this.data.imageX -  (countArr[0].count / 10);
-            },10);
-          }
-        },
-        {
-          str:"上",
-          count:this.data.imageY - this.data.border.top,
-          fn:()=>{
-            this.transitionFn(()=>{
-              this.data.imageY = this.data.imageY -  (countArr[1].count / 10);
-            },10);
-          }
-        },
-        {
-          str:"右",
-          count:(this.data.border.left + this.data.MaskWidth) - (this.data.imageX + this.data.imageWidth),
-          fn:()=>{
-            this.transitionFn(()=>{
-              this.data.imageX = this.data.imageX +  (countArr[2].count / 10);
-            },10);
-          }
-        },
-        {
-          str:"下",
-          count:(this.data.border.top + this.data.MaskHeight) - (this.data.imageY + this.data.imageHeight),
-          fn:()=>{
-            this.transitionFn(()=>{
-              this.data.imageY = this.data.imageY +  (countArr[3].count / 10);
-            },10);
-          }
-        },
-      ];
-    
-      for(let i = 0;i<countArr.length;i++){
-        if(countArr[i].count > 0){
-          countArr[i].fn();
-        };
-      };
-  
+      
+      this.rangeConstraint()
+      
     },
-    touching(res){
+    touching(res){//触摸中
       if (!this.data.switch) {
         return;
       };
@@ -275,11 +233,7 @@ Component({
       
     },
     rotateFunction(){
-      if(!this.data.functionSwitch){
-        console.log("MakWidth与MakHeight不相等时，此功能禁用")
-        return;
-      };
- 
+     
       let centreX = this.data.windowWidth / 2;
       let centreY = this.data.windowHeight / 2;
 
@@ -298,6 +252,7 @@ Component({
              break;
       } 
 
+      this.rangeConstraint()
       this.transitionFn(()=>{
         this.data.canvasObj.context.translate(centreX, centreY);
         this.data.canvasObj.context.rotate(6 * Math.PI / 180);
@@ -307,6 +262,67 @@ Component({
         this.data.canvasObj.contextThree.translate(-centreX, -centreY);
       },15)
   
+    },
+    rangeConstraint(){
+
+      let borderLeft,borderTop,mkHeight,mkWidth 
+
+      if(this.data.rotate == 0 || this.data.rotate == 180){
+         borderLeft = this.data.border.left
+         borderTop = this.data.border.top
+         mkHeight = this.data.MaskWidth
+         mkWidth = this.data.MaskHeight
+      }else  if(this.data.rotate == 90 || this.data.rotate == 270){
+        let borderGap = (this.data.MaskHeight -this.data.MaskWidth) / 2
+        borderLeft = this.data.border.left - borderGap
+        borderTop = this.data.border.top + borderGap
+        mkHeight = this.data.MaskHeight 
+        mkWidth = this.data.MaskWidth
+     }
+    
+      let countArr = [
+        {
+          str:"左",
+          count:this.data.imageX - borderLeft,
+          fn:()=>{
+            this.transitionFn(()=>{
+              this.data.imageX = this.data.imageX -  (countArr[0].count / 10);
+            },10);
+          }
+        },
+        {
+          str:"上",
+          count:this.data.imageY - borderTop,
+          fn:()=>{
+            this.transitionFn(()=>{
+              this.data.imageY = this.data.imageY -  (countArr[1].count / 10);
+            },10);
+          }
+        },
+        {
+          str:"右",
+          count:(borderLeft + mkHeight) - (this.data.imageX + this.data.imageWidth),
+          fn:()=>{
+            this.transitionFn(()=>{
+              this.data.imageX = this.data.imageX +  (countArr[2].count / 10);
+            },10);
+          }
+        },
+        {
+          str:"下",
+          count:(borderTop + mkWidth) - (this.data.imageY + this.data.imageHeight),
+          fn:()=>{
+            this.transitionFn(()=>{
+              this.data.imageY = this.data.imageY +  (countArr[3].count / 10);
+            },10);
+          }
+        },
+      ];
+      for(let i = 0;i<countArr.length;i++){
+        if(countArr[i].count > 0){
+          countArr[i].fn();
+        };
+      };
     },
     restoreFunction(){
       let centreX = this.data.windowWidth / 2; 
