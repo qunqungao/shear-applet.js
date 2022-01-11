@@ -11,9 +11,9 @@ MakWidth|Number|否|蒙版中心镂空部分宽度
 MakHeight|Number|否|蒙版中心镂空部分高度
 MaskForm|Number|否|蒙版中心镂空形状与剪切后的图片形状(1为正方形，2为圆形，其他无效)
 MaxScaling|Number|否|允许图片扩大的最大倍数
-Speed|Number|否|动画运行速度（可选范围0至3，数字越大速度越慢，超出无效）
+Speed|Number|否|动画运行速度（可选范围0至3，数字越大速度越慢，（默认为1）超出无效）
 >### 注意
->#### 需要注意，MakWidth与MakHeight不相等时，旋转功能禁用，并且MakWidth与MakHeight不相等时MaskForm不能为2
+>#### 需要注意 MakWidth与MakHeight不相等时MaskForm不能为2，只能为1
 
 ### 方法
 方法名|功能
@@ -24,12 +24,12 @@ shearFunction|确认裁剪|
 
 ### 引入与获取裁剪后的图片临时路径
 ```
-// 父级页面内
 
-// json
+// json 引入并注册
  "usingComponents": {
         "shear":"../shear-applet/shear-applet"
   }
+  
 // wxml
  <shear id="shearId" imageUrl="{{url}}" bind:ImagePath="event"></shear>
  <view>
